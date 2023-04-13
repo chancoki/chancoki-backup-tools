@@ -5,7 +5,7 @@
   "author": "chancoki <chhj727@163.com>",
   "mine": "chancoki",
   "description": "A chancoki's  Backup Tools by electron-vue",
-  "license": null,
+  "license": "./LICENSE",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",

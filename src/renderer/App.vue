@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "xhrmyy-chech-in",
-};
-</script>
-
 <style>
 :root {
   font-family: "Microsoft YaHei";
