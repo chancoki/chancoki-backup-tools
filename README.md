@@ -1,16 +1,5 @@
-### nodejs --version  v14.18.1
-### npm --version 6.14.15
 
-### npm install --global windows-build-tools --save
-
-### 打包安装教程 
-#### 运行前，.electron-vue/build.js 变量tasks命名重复更改一个，并添加const Multispinner = require("multispinner");，添加yarn add multispinner
-#### .electron-vue/dev-client.js 添加 import 'polyfill-object.fromentries'; ，并添加yarn add polyfill-object.fromentries
-#### 
-#### https://blog.csdn.net/mm_0123456789/article/details/122825576
-#### https://blog.csdn.net/y_k_1_2_3_4/article/details/126479427
-
-> An electron-vue project
+# >chancoki's Backup Tools
 
 #### Build Setup
 
