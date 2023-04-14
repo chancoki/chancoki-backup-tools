@@ -1,6 +1,5 @@
 import useGit from "./useGit";
-import useNotification from "./useNotification";
-
+import useClickNotification from "./useClickNotification";
 import { Message } from "element-ui";
 
 function useBackUp(data) {
@@ -27,7 +26,7 @@ function useBackUp(data) {
           count.fail++;
           Message.error(error);
           if (index + 1 === data.length) {
-            useNotification("备份完成", `success ${count.success} , fail ${count.fail}`);
+            useClickNotification(count);
             resolve();
           }
 
@@ -36,7 +35,8 @@ function useBackUp(data) {
 
         count.success++;
         if (index + 1 === data.length) {
-          useNotification("备份完成", `success ${count.success} , fail ${count.fail}`);
+          useClickNotification(count);
+
           resolve();
         }
       }

@@ -1,7 +1,13 @@
-function useNotification(NOTIFICATION_TITLE, NOTIFICATION_BODY) {
-  new window.Notification(NOTIFICATION_TITLE, {
+function useNotification(NOTIFICATION_TITLE, NOTIFICATION_BODY, callback) {
+  const notification = new window.Notification(NOTIFICATION_TITLE, {
     body: NOTIFICATION_BODY,
-  }).show();
+  });
+
+  notification.onclick = callback;
+
+  notification.show();
+
+  return notification;
 }
 
 export default useNotification;
