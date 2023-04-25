@@ -8,6 +8,12 @@ import { getCookie } from "@/utils";
 import dayjs from "dayjs";
 import { shell } from "electron";
 
+/**
+ * useClickNotification - displays a notification with backup completion status and opens the backup folder when clicked
+ *
+ * @param  {Object} count object containing success and fail keys for the number of successful and failed backups
+ * @return {void}
+ */
 function useClickNotification(count) {
   const date = dayjs().format("YYYY_MM_DD");
   const setting = getCookie(backUp);

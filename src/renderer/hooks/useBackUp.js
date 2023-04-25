@@ -2,6 +2,15 @@ import useGit from "./useGit";
 import useClickNotification from "./useClickNotification";
 import { Message } from "element-ui";
 
+/**
+ *
+ *@param {Array|Object} data - Data to be backed up. If it's an object, it will be converted to an array.
+ *@param {string} data.url - The Git repository URL.
+ *@param {string} data.branch - The Git branch to clone.
+ *@param {boolean} data.disabled - Whether or not the item is disabled.
+ *@returns {Promise} - A promise that resolves when the backup is complete, or rejects if there is an error.
+ *@throws {string} - Throws an error if there is no data to backup.
+ */
 function useBackUp(data) {
   if (!(data instanceof Array)) {
     data = [data];
