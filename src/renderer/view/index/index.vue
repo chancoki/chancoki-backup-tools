@@ -69,7 +69,7 @@ export default {
 
   created() {
     this.data = getData();
-    this.setting = getCookie(backUp);
+    this.setting = getCookie(backUp) || { path: "" };
 
     if (!this.setting.path) {
       this.settingVisible = true;
