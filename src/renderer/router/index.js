@@ -6,13 +6,18 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/",
+      path: "*",
+      redirect: "/",
+    },
+    {
+      path: "/index",
       name: "index",
       component: require("@/view/index/index.vue").default,
     },
     {
-      path: "*",
-      redirect: "/",
+      path: "/",
+      name: "login",
+      component: require("@/view/login/index.vue").default,
     },
   ],
 });
