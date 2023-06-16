@@ -17,3 +17,10 @@ export function login(data) {
 export function signup(data) {
   return useRequest({ baseUrl, url: "/user/signup", method: "POST", data });
 }
+
+/**
+ * 获取用户信息
+ */
+export function getUser(data) {
+  return useRequest({ baseUrl, url: "/user/getUser", method: "POST", data });
+}

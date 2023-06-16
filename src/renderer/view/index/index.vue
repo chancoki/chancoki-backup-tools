@@ -1,16 +1,19 @@
 <script>
+// Api
+import { addStore, getStore, updateStore, deleteStore } from "@/api/store";
+import { getUser } from "@/api/user";
+
 // Config
-import { backUp, packageInfo } from "@/config/enum";
+import { backUp, packageInfo, token } from "@/config/enum";
 
 // Hooks
 import useId from "@/hooks/useId";
 import useBackUp from "@/hooks/useBackUp";
-import { getData, saveData } from "@/hooks/useSave";
 
 // Utils
 import nprogress from "nprogress";
 import filePath from "@/utils/file-path";
-import { setCookie, getCookie } from "@/utils/index";
+import { setCookie, getCookie, delCookie } from "@/utils/index";
 
 export default {
   data() {
@@ -30,6 +33,7 @@ export default {
       settingVisible: false,
       setting: {},
       packageInfo,
+      userInfo: {},
     };
   },
 
@@ -68,32 +72,39 @@ export default {
   },
 
   created() {
-    this.data = getData();
+    this.getData();
+    this.getUserInfo();
     this.setting = getCookie(backUp) || { path: "" };
-
     if (!this.setting.path) {
       this.settingVisible = true;
     }
   },
 
   methods: {
-    onSubmit() {
+    async getData() {
+      const { data } = await getStore();
+
+      this.data = data;
+    },
+    async onSubmit() {
+      const func = this.form.id ? updateStore : addStore;
+      this.form.id = this.form.id || useId();
+
+      const { msg } = await func(this.form);
+      this.$message.success(msg);
+      this.getData();
       this.dialogFormVisible = false;
-
-      if (this.form.id) {
-        this.data = this.data.map((item) => (item.id === this.form.id ? this.form : item));
-        saveData([...this.data]);
-        return;
-      }
-
-      this.form.id = useId();
-      saveData([...this.data, this.form]);
-      this.data = getData();
     },
 
-    deleteGit(index) {
-      this.data.splice(index, 1);
-      saveData([...this.data]);
+    async getUserInfo() {
+      const { data } = await getUser();
+      this.userInfo = data;
+    },
+
+    async deleteGit(id) {
+      const { msg } = await deleteStore({ id });
+      this.$message.success(msg);
+      this.getData();
     },
 
     changeGit(index) {
@@ -134,12 +145,22 @@ export default {
       const res = await filePath();
       this.setting.path = res;
     },
+
+    backLogin() {
+      delCookie(token);
+      this.$router.push("/login");
+    },
   },
 };
 </script>
 
 <template>
   <div>
+    <div class="header">
+      <div>{{ userInfo.name }}</div>
+
+      <el-button type="primary" size="mini" @click="backLogin">退出</el-button>
+    </div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <div>
@@ -166,7 +187,7 @@ export default {
           </template>
 
           <div class="collapse-title__button">
-            <el-popconfirm title="确定删除吗" @confirm="deleteGit(index)">
+            <el-popconfirm title="确定删除吗" @confirm="deleteGit(item.id)">
               <el-button slot="reference" type="danger" icon="el-icon-delete" size="small">删除</el-button>
             </el-popconfirm>
 
@@ -283,5 +304,17 @@ export default {
   font-size: 16px;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.4);
+}
+
+.header {
+  padding: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+  background: rgba(64, 158, 255, 0.2);
+  color: #409eff;
+  font-weight: 900;
 }
 </style>
